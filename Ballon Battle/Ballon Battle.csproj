@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3BC79686-A271-4D81-9D92-7A95A36E319E}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Ballon_Battle</RootNamespace>
     <AssemblyName>Ballon Battle</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -31,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=3.3.3.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -105,6 +108,10 @@
     <ProjectReference Include="..\GraphicsOpenGL\GraphicsOpenGL.csproj">
       <Project>{6f70f34a-2e1e-4760-824f-6d1b9ed4067b}</Project>
       <Name>GraphicsOpenGL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HttpConnectionLibrary\HttpConnectionLibrary.csproj">
+      <Project>{0d352643-8861-495a-92cc-0520edf85ff5}</Project>
+      <Name>HttpConnectionLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\PrizesLibrary\PrizesLibrary.csproj">
       <Project>{653ada59-e7c7-419c-bbdb-e0c3be6d3471}</Project>

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using OpenTK.Graphics.OpenGL;
 using GameLibrary;
+using HttpConnectionLibrary;
 
 namespace Ballon_Battle
 {
@@ -32,11 +33,13 @@ namespace Ballon_Battle
             InitializeComponent();
             CenterToScreen();
             glControl.Size = this.Size;
-            glControl.Visible = true;
+            /*glControl.Visible = true;
             glTimer.Start();
             prizeTimer.Start();
-            windTimer.Start();
+            windTimer.Start();*/
             gameEngine = new BattleGame();
+
+
         }
 
         /// <summary>
@@ -64,7 +67,7 @@ namespace Ballon_Battle
         /// <param name="e"></param>
         private void glControl_Paint(object sender, PaintEventArgs e)
         {
-            GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit); // ?
+            GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
             gameEngine.Draw();
 
@@ -241,6 +244,30 @@ namespace Ballon_Battle
         private void glControl_KeyDown(object sender, KeyEventArgs e)
         {
             gameEngine.UpdateKeyDown(e);
+        }
+
+        private void createServerButton_Click(object sender, EventArgs e)
+        {
+            Server server = new Server();
+            server.OnGetData += StartGame;
+
+            server.UpdateData(4);
+        }
+
+        private void StartGame(object obj)
+        {
+            Console.WriteLine((int)obj);
+            glControl.Visible = true;
+            glTimer.Start();
+            prizeTimer.Start();
+            windTimer.Start();
+        }
+
+        private void connectButton_Click(object sender, EventArgs e)
+        {
+            Client client = new Client(ipTextBox.Text);
+            client.OnGetData += StartGame;
+            client.GetData<int>();
         }
     }
 }
