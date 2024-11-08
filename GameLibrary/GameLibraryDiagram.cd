@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GameLibrary.Balloon">
+    <Position X="5.25" Y="1" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gEQiCAACACgAAoAAAQgAAgARAABAAEQBAgAAQAAIAQA=</HashCode>
+      <FileName>Balloon.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="BalloonSprite" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="ammos" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="GameLibrary.BattleGame">
+    <Position X="11" Y="0.5" Width="2" />
+    <AssociationLine Name="backgroundTexture" Type="GraphicsOpenGL.Texture">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.122" Y="-0.251" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="secondPlayer" Type="GameLibrary.Balloon" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11" Y="3.165" />
+        <Point X="7.5" Y="3.062" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.066" Y="0.086" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="firstAmmos" Type="AmmoLibrary.Ammo">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.122" Y="0.3" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="secondAmmos" Type="AmmoLibrary.Ammo">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.026" Y="-0.587" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>QAwAEAIEkCNQAhEAsAAYAgAAEAABABSCAAQBAABGCEA=</HashCode>
+      <FileName>BattleGame.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="backgroundTexture" />
+      <Field Name="landTexture" />
+      <Field Name="firstPlayer" />
+      <Field Name="secondPlayer" />
+      <Field Name="currentPrize" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="firstAmmos" />
+      <Field Name="secondAmmos" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="GameLibrary.Explode">
+    <Position X="3" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAIIQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Explode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicsOpenGL.Texture" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="PrizesLibrary.Prize" Collapsed="true">
+    <Position X="14" Y="1" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="AmmoLibrary.Ammo" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

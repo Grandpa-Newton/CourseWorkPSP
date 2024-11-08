@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="AmmoLibrary.Ammo">
+    <Position X="10.25" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAQKAAAAAACAAiAgAAEAAAARAAAAAABQAAAAAAAAAAA=</HashCode>
+      <FileName>Ammo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmmoLibrary.AmmoDecorator">
+    <Position X="7.5" Y="5.25" Width="1.5" />
+    <Members>
+      <Method Name="AmmoDecorator" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Decorators\AmmoDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmmoLibrary.ExplosiveAmmo">
+    <Position X="14" Y="4" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExplosiveAmmo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmmoLibrary.PiercingAmmo">
+    <Position X="14" Y="7" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PiercingAmmo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmmoLibrary.SupersonicAmmo">
+    <Position X="14" Y="5.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SupersonicAmmo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmmoLibrary.DistanceDecorator">
+    <Position X="7.25" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Decorators\DistanceDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmmoLibrary.RadiusDecorator">
+    <Position X="7.25" Y="7" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Decorators\RadiusDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmmoLibrary.SpeedDecorator">
+    <Position X="5" Y="5.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Decorators\SpeedDecorator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
