@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using System.Windows.Forms;
+using HttpConnectionLibrary;
+using System.Threading.Tasks;
 
 namespace GameLibrary
 {
@@ -59,6 +61,7 @@ namespace GameLibrary
         /// Границы объекта второго игрока
         /// </summary>
         RectangleF secondPlayerCollider;
+        private RectangleF currentPlayerCollider;
 
         /// <summary>
         /// Границы объекта приза, находящегося на сцене
@@ -134,6 +137,28 @@ namespace GameLibrary
         /// Объект генератора призов
         /// </summary>
         PrizeGenerator prizeGenerator = new PrizeGenerator();
+        private IHttpHandler _networkHandler;
+        private Balloon _currentPlayer;
+        private Balloon _networkPlayer;
+        private NetworkData _currentNetworkData = new NetworkData();
+
+        public void SetNetworkStartData(IHttpHandler networkHandler, bool isLeftPlayer)
+        {
+            _networkHandler = networkHandler;
+
+            if (isLeftPlayer)
+            {
+                _currentPlayer = firstPlayer;
+                _networkPlayer = secondPlayer;
+            }
+            else
+            {
+                _currentPlayer = secondPlayer;
+                _networkPlayer = firstPlayer;
+            }
+
+            _networkHandler.OnGetData += OnGetNetworkData;
+        }
 
         /// <summary>
         /// Загружает объекты, необходимые для процесса игры
@@ -247,27 +272,41 @@ namespace GameLibrary
         /// 2 - завершение игры поражением второго игрока, 
         /// 3 - завершение игры ничьей)
         /// </returns>
-        public int Update()
+        public async Task<int> Update()
         {
             firstPlayerTicks++;
             secondPlayerTicks++;
 
-            firstPlayer.Update();
-            secondPlayer.Update();
+            /*firstPlayer.Update();
+            secondPlayer.Update();*/
+
+            _currentPlayer.Update();
 
             firstPlayerCollider = firstPlayer.GetCollider();
             secondPlayerCollider = secondPlayer.GetCollider();
 
+            currentPlayerCollider = _currentPlayer.GetCollider();
+
             UpdateInput();
-            int codeResult = CheckCollisions(); 
+            int codeResult = CheckCollisions();
             if (codeResult != 0)
             {
                 return codeResult;
             }
             UpdateAmmos();
             UpdatePrize();
+            await UpdateNetworkData();
 
             return 0;
+        }
+
+        private async Task UpdateNetworkData()
+        {
+            var positionCenter = _currentPlayer.PositionCenter;
+            _currentNetworkData.BalloonPositionX = positionCenter.X;
+            _currentNetworkData.BalloonPositionY = positionCenter.Y;
+
+            await _networkHandler.UpdateData(_currentNetworkData);
         }
 
         /// <summary>
@@ -275,14 +314,25 @@ namespace GameLibrary
         /// </summary>
         private void UpdateInput()
         {
-            if (keysDown[0] && (firstPlayerCollider.Y > screenCollider.Y))
+            /*if (keysDown[0] && (firstPlayerCollider.Y > screenCollider.Y))
                 firstPlayer.Update(new Vector2(0f, 0.01f));
             if (keysDown[1])
                 firstPlayer.Update(new Vector2(0f, -0.01f));
             if (keysDown[2] && (secondPlayerCollider.Y > screenCollider.Y))
                 secondPlayer.Update(new Vector2(0f, 0.01f));
             if (keysDown[3])
-                secondPlayer.Update(new Vector2(0f, -0.01f));
+                secondPlayer.Update(new Vector2(0f, -0.01f));*/
+
+
+            if (keysDown[0] && currentPlayerCollider.Y > screenCollider.Y)
+            {
+                _currentPlayer.Update(new Vector2(0f, 0.01f));
+            }
+            if (keysDown[1])
+            {
+                _currentPlayer.Update(new Vector2(0f, -0.01f));
+            }
+
             if ((keysDown[4] || keysDown[7]) && secondPlayerTicks >= 50)
             {
                 secondPlayerTicks = 0;
@@ -672,6 +722,15 @@ namespace GameLibrary
         public int GetExplodesCount()
         {
             return explodes.Count;
+        }
+
+        private void OnGetNetworkData(object obj)
+        {
+            NetworkData networkData = (NetworkData)obj;
+
+            _networkPlayer.PositionCenter = new Vector2(networkData.BalloonPositionX, networkData.BalloonPositionY);
+
+            Console.WriteLine($"NetworkPosition = {_networkPlayer.PositionCenter}");
         }
     }
 }

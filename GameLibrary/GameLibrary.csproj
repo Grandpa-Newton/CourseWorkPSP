@@ -49,6 +49,7 @@
     <Compile Include="Balloon.cs" />
     <Compile Include="BattleGame.cs" />
     <Compile Include="Explode.cs" />
+    <Compile Include="NetworkData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +65,10 @@
     <ProjectReference Include="..\GraphicsOpenGL\GraphicsOpenGL.csproj">
       <Project>{6f70f34a-2e1e-4760-824f-6d1b9ed4067b}</Project>
       <Name>GraphicsOpenGL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HttpConnectionLibrary\HttpConnectionLibrary.csproj">
+      <Project>{0d352643-8861-495a-92cc-0520edf85ff5}</Project>
+      <Name>HttpConnectionLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\PrizesLibrary\PrizesLibrary.csproj">
       <Project>{653ada59-e7c7-419c-bbdb-e0c3be6d3471}</Project>

@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using OpenTK.Graphics.OpenGL;
 using GameLibrary;
 using HttpConnectionLibrary;
+using System.Threading.Tasks;
 
 namespace Ballon_Battle
 {
@@ -38,8 +39,6 @@ namespace Ballon_Battle
             prizeTimer.Start();
             windTimer.Start();*/
             gameEngine = new BattleGame();
-
-
         }
 
         /// <summary>
@@ -163,11 +162,16 @@ namespace Ballon_Battle
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void glTimer_Tick(object sender, EventArgs e)
+        private async void glTimer_Tick(object sender, EventArgs e)
         {
-            int resultCode = gameEngine.Update();
+            await GetResult();
+        }
 
-            switch(resultCode)
+        private async Task GetResult()
+        {
+            int resultCode = await gameEngine.Update();
+
+            switch (resultCode)
             {
                 case 0:
                     break;
@@ -176,7 +180,7 @@ namespace Ballon_Battle
                     prizeTimer.Stop();
                     windTimer.Stop();
                     glTimer.Tick -= glTimer_Tick;
-                    
+
                     glTimer.Tick += glTimer_FirstPlayerLooseTick;
                     glTimer.Start();
                     break;
@@ -249,14 +253,14 @@ namespace Ballon_Battle
         private void createServerButton_Click(object sender, EventArgs e)
         {
             Server server = new Server();
-            server.OnGetData += StartGame;
+            server.OnGetData += (obj) => StartGame(obj, server, true);
 
             server.UpdateData(4);
         }
 
-        private void StartGame(object obj)
+        private void StartGame(object obj, IHttpHandler handler, bool isServer)
         {
-            Console.WriteLine((int)obj);
+            gameEngine.SetNetworkStartData(handler, isServer);
             glControl.Visible = true;
             glTimer.Start();
             prizeTimer.Start();
@@ -266,7 +270,7 @@ namespace Ballon_Battle
         private void connectButton_Click(object sender, EventArgs e)
         {
             Client client = new Client(ipTextBox.Text);
-            client.OnGetData += StartGame;
+            client.OnGetData += (obj) => StartGame(obj, client, false);
             client.GetData<int>();
         }
     }
