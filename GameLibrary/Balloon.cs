@@ -46,6 +46,8 @@ namespace GameLibrary
         /// Показатель, отвечающий за то, работает ветер или нет (true - работает, false - нет)
         /// </summary>
         private bool isWindOn = false;
+
+        private Random random;
         
         /// <summary>
         /// Конструктор создания шара
@@ -263,7 +265,6 @@ namespace GameLibrary
         /// </summary>
         public void ChangeAmmoCharesterictics()
         {
-            Random random = new Random();
             int decoratorType = random.Next(0, 3);
             switch(decoratorType)
             {
@@ -317,6 +318,11 @@ namespace GameLibrary
         public string GetInfo()
         {
             return $"Health = {Health}, Armour = {Armour}, Fuel = {Fuel}, Radius = {100*ammos[currentAmmo].Radius}, Distance = {100*ammos[currentAmmo].Distance}, Speed = {100*ammos[currentAmmo].Speed.X}";
+        }
+
+        public void SetRandom(Random random)
+        {
+            this.random = random;
         }
     }
 }

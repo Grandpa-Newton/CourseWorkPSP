@@ -41,6 +41,11 @@ namespace HttpConnectionLibrary
             OnGetData?.Invoke(result);
         }
 
+        public void ClearAllListeners()
+        {
+            OnGetData = null;
+        }
+
         public void Dispose()
         {
             _httpClient.Dispose();

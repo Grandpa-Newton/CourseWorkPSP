@@ -38,6 +38,11 @@ namespace HttpConnectionLibrary
             OnGetData?.Invoke(request);
         }
 
+        public void ClearAllListeners()
+        {
+            OnGetData = null;
+        }
+
         private T GetRequest<T>(HttpListenerContext context)
         {
             var request = context.Request;

@@ -86,7 +86,7 @@ namespace GameLibrary
         /// <summary>
         /// Объект для генерации случайных чисел
         /// </summary>
-        Random random = new Random();
+        Random random;
 
         /// <summary>
         /// Объект текущего приза
@@ -136,13 +136,13 @@ namespace GameLibrary
         /// <summary>
         /// Объект генератора призов
         /// </summary>
-        PrizeGenerator prizeGenerator = new PrizeGenerator();
+        PrizeGenerator prizeGenerator;
         private IHttpHandler _networkHandler;
         private Balloon _currentPlayer;
         private Balloon _networkPlayer;
         private NetworkData _currentNetworkData = new NetworkData();
 
-        public void SetNetworkStartData(IHttpHandler networkHandler, bool isLeftPlayer)
+        public void SetNetworkStartData(IHttpHandler networkHandler, bool isLeftPlayer, int seed)
         {
             _networkHandler = networkHandler;
 
@@ -156,6 +156,13 @@ namespace GameLibrary
                 _currentPlayer = secondPlayer;
                 _networkPlayer = firstPlayer;
             }
+
+            random = new Random(seed);
+
+            prizeGenerator = new PrizeGenerator(random);
+
+            firstPlayer.SetRandom(random);
+            secondPlayer.SetRandom(random);
 
             _networkHandler.OnGetData += OnGetNetworkData;
         }
@@ -729,8 +736,6 @@ namespace GameLibrary
             NetworkData networkData = (NetworkData)obj;
 
             _networkPlayer.PositionCenter = new Vector2(networkData.BalloonPositionX, networkData.BalloonPositionY);
-
-            Console.WriteLine($"NetworkPosition = {_networkPlayer.PositionCenter}");
         }
     }
 }

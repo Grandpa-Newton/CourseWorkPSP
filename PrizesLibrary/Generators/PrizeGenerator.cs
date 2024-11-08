@@ -16,9 +16,9 @@ namespace PrizesLibrary
         /// <summary>
         /// Конструктор для создания объекта генератора приза
         /// </summary>
-        public PrizeGenerator()
+        public PrizeGenerator(Random random)
         {
-            random = new Random();
+            this.random = random;
         }
         /// <summary>
         /// Создание объекта приза

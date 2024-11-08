@@ -34,10 +34,6 @@ namespace Ballon_Battle
             InitializeComponent();
             CenterToScreen();
             glControl.Size = this.Size;
-            /*glControl.Visible = true;
-            glTimer.Start();
-            prizeTimer.Start();
-            windTimer.Start();*/
             gameEngine = new BattleGame();
         }
 
@@ -253,14 +249,15 @@ namespace Ballon_Battle
         private void createServerButton_Click(object sender, EventArgs e)
         {
             Server server = new Server();
-            server.OnGetData += (obj) => StartGame(obj, server, true);
-
-            server.UpdateData(4);
+            int seed = new Random().Next();
+            server.OnGetData += (_) => StartGame(seed, server, true);
+            server.UpdateData(seed);
         }
 
-        private void StartGame(object obj, IHttpHandler handler, bool isServer)
+        private void StartGame(int seed, IHttpHandler handler, bool isServer)
         {
-            gameEngine.SetNetworkStartData(handler, isServer);
+            handler.ClearAllListeners();
+            gameEngine.SetNetworkStartData(handler, isServer, seed);
             glControl.Visible = true;
             glTimer.Start();
             prizeTimer.Start();
@@ -270,7 +267,10 @@ namespace Ballon_Battle
         private void connectButton_Click(object sender, EventArgs e)
         {
             Client client = new Client(ipTextBox.Text);
-            client.OnGetData += (obj) => StartGame(obj, client, false);
+            client.OnGetData += (obj) =>
+            {
+                StartGame((int)obj, client, false);
+            };
             client.GetData<int>();
         }
     }

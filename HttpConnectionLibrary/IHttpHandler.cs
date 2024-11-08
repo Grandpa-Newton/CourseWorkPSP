@@ -7,5 +7,6 @@ namespace HttpConnectionLibrary
     {
         Task UpdateData<T>(T obj);
         event Action<object> OnGetData;
+        void ClearAllListeners();
     }
 }
