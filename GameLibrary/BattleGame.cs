@@ -61,6 +61,7 @@ namespace GameLibrary
         /// Границы объекта второго игрока
         /// </summary>
         RectangleF secondPlayerCollider;
+
         private RectangleF currentPlayerCollider;
 
         /// <summary>
@@ -132,6 +133,8 @@ namespace GameLibrary
         /// Количество тиков выстрелов первого игрока, отвечает за выпуск снарядов не ранее 50 тиков
         /// </summary>
         int firstPlayerTicks = 50;
+
+        int currentPlayerTicks = 50;
         
         /// <summary>
         /// Объект генератора призов
@@ -141,6 +144,7 @@ namespace GameLibrary
         private Balloon _currentPlayer;
         private Balloon _networkPlayer;
         private NetworkData _currentNetworkData = new NetworkData();
+        private BulletData _bulletData;
 
         public void SetNetworkStartData(IHttpHandler networkHandler, bool isLeftPlayer, int seed)
         {
@@ -283,6 +287,7 @@ namespace GameLibrary
         {
             firstPlayerTicks++;
             secondPlayerTicks++;
+            currentPlayerTicks++;
 
             /*firstPlayer.Update();
             secondPlayer.Update();*/
@@ -313,7 +318,11 @@ namespace GameLibrary
             _currentNetworkData.BalloonPositionX = positionCenter.X;
             _currentNetworkData.BalloonPositionY = positionCenter.Y;
 
+            _currentNetworkData.BulletData = _bulletData;
+
             await _networkHandler.UpdateData(_currentNetworkData);
+
+            _bulletData = null;
         }
 
         /// <summary>
@@ -340,7 +349,7 @@ namespace GameLibrary
                 _currentPlayer.Update(new Vector2(0f, -0.01f));
             }
 
-            if ((keysDown[4] || keysDown[7]) && secondPlayerTicks >= 50)
+            /*if ((keysDown[4] || keysDown[7]) && secondPlayerTicks >= 50)
             {
                 secondPlayerTicks = 0;
                 Ammo newAmmo = null;
@@ -351,18 +360,34 @@ namespace GameLibrary
                 //   Debug.WriteLine($"Distance={newAmmo.Distance}, Radius={newAmmo.Radius}, Speed={newAmmo.Speed.X}");
                 secondAmmos.Add(newAmmo);
 
-            }
-            if ((keysDown[5] || keysDown[6]) && firstPlayerTicks >= 50)
+            }*/
+            if ((keysDown[5] || keysDown[6]) && currentPlayerTicks >= 50)
             {
-                firstPlayerTicks = 0;
+                currentPlayerTicks = 0;
                 Ammo newAmmo = null;
                 if (keysDown[5])
-                    newAmmo = firstPlayer.GetCurrentAmmo(false);
+                    newAmmo = _currentPlayer.GetCurrentAmmo(false);
                 else if (keysDown[6])
-                    newAmmo = firstPlayer.GetCurrentAmmo(true);
+                    newAmmo = _currentPlayer.GetCurrentAmmo(true);
 
                 //   Debug.WriteLine($"Distance={newAmmo.Distance}, Radius={newAmmo.Radius}, Speed={newAmmo.Speed.X}");
-                firstAmmos.Add(newAmmo);
+
+                if(_currentPlayer == firstPlayer)
+                {
+                    firstAmmos.Add(newAmmo);
+                }
+                else
+                {
+                    secondAmmos.Add(newAmmo);
+                }
+
+                _bulletData = new BulletData()
+                {
+                    PositionX = newAmmo.PositionCenter.X,
+                    PositionY = newAmmo.PositionCenter.Y,
+                    IsLeft = newAmmo.IsLeft,
+                    AmmoType = newAmmo.SerializeAmmo()
+                };
             }
         }
 
@@ -736,6 +761,44 @@ namespace GameLibrary
             NetworkData networkData = (NetworkData)obj;
 
             _networkPlayer.PositionCenter = new Vector2(networkData.BalloonPositionX, networkData.BalloonPositionY);
+
+            var bulletData = networkData.BulletData;
+
+            if(bulletData == null )
+            {
+                return;
+            }
+
+            if(_currentPlayer == firstPlayer)
+            {
+                secondAmmos.Add(CreateNewAmmo(bulletData));
+            }
+            else
+            {
+                firstAmmos.Add(CreateNewAmmo(bulletData));
+            }
+        }
+
+        private Ammo CreateNewAmmo(BulletData bulletData)
+        {
+            Ammo ammo = null;
+            switch (bulletData.AmmoType)
+            {
+                case 0:
+                    ammo = new ExplosiveAmmo();
+                    ammo.Spawn(new Vector2(bulletData.PositionX, bulletData.PositionY), bulletData.IsLeft); 
+                    break;
+                case 1:
+                    ammo = new PiercingAmmo();
+                    ammo.Spawn(new Vector2(bulletData.PositionX, bulletData.PositionY), bulletData.IsLeft);
+                    break;
+                case 2:
+                    ammo = new SupersonicAmmo();
+                    ammo.Spawn(new Vector2(bulletData.PositionX, bulletData.PositionY), bulletData.IsLeft);
+                    break;
+            }
+
+            return ammo;
         }
     }
 }

@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Balloon.cs" />
     <Compile Include="BattleGame.cs" />
+    <Compile Include="BulletData.cs" />
     <Compile Include="Explode.cs" />
     <Compile Include="NetworkData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

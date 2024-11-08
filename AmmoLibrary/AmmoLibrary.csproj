@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ammo.cs" />
+    <Compile Include="AmmoExtensions.cs" />
     <Compile Include="Decorators\AmmoDecorator.cs" />
     <Compile Include="Decorators\DistanceDecorator.cs" />
     <Compile Include="Decorators\RadiusDecorator.cs" />
