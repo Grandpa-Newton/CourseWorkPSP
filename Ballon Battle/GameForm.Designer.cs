@@ -41,6 +41,7 @@ namespace Ballon_Battle
             this.connectButton = new System.Windows.Forms.Button();
             this.createServerButton = new System.Windows.Forms.Button();
             this.infoLabel = new System.Windows.Forms.Label();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // glControl
@@ -123,19 +124,31 @@ namespace Ballon_Battle
             // 
             // infoLabel
             // 
-            this.infoLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(142)))), ((int)(((byte)(196)))));
             this.infoLabel.AutoSize = true;
+            this.infoLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(142)))), ((int)(((byte)(196)))));
             this.infoLabel.Location = new System.Drawing.Point(25, 23);
             this.infoLabel.Name = "infoLabel";
             this.infoLabel.Size = new System.Drawing.Size(0, 13);
             this.infoLabel.TabIndex = 7;
             this.infoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // cancelButton
+            // 
+            this.cancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cancelButton.Location = new System.Drawing.Point(313, 346);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(178, 37);
+            this.cancelButton.TabIndex = 8;
+            this.cancelButton.Text = "Отменить";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.glControl);
             this.Controls.Add(this.firstPlayerInfo);
@@ -176,5 +189,6 @@ namespace Ballon_Battle
         private System.Windows.Forms.Button createServerButton;
         private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.Label infoLabel;
+        private System.Windows.Forms.Button cancelButton;
     }
 }

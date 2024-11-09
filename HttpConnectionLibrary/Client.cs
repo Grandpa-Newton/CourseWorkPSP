@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HttpConnectionLibrary
 {
-    public class Client : IHttpHandler, IDisposable
+    public class Client : IHttpHandler
     {
         public event Action<object> OnGetData;
 

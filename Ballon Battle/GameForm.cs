@@ -14,7 +14,10 @@ namespace Ballon_Battle
         /// Объект игрового движка
         /// </summary>
         BattleGame gameEngine;
+
         private NetworkControlsContainer _networkControlsContainer;
+
+        private IHttpHandler _networkHandler;
 
         /// <summary>
         /// Label для отображения текущего состояния первого игрока
@@ -43,6 +46,7 @@ namespace Ballon_Battle
                 infoLabel
             });
             _networkControlsContainer.UpdateVisibility(true);
+            cancelButton.Visible = false;
         }
 
         /// <summary>
@@ -96,10 +100,12 @@ namespace Ballon_Battle
             connectButton.SetBounds((int)(0.05 * Width), (int)(0.85 * Height), (int)(0.25 * Width), (int)(0.05 * Height));
             ipTextBox.SetBounds((int)(0.375 * Width), (int)(0.85 * Height), (int)(0.25 * Width), (int)(0.05 * Height));
             createServerButton.SetBounds((int)(0.7 * Width), (int)(0.85 * Height), (int)(0.25 * Width), (int)(0.05 * Height));
+            cancelButton.SetBounds((int)(0.375 * Width), (int)(0.775 * Height), (int)(0.25 * Width), (int)(0.05 * Height));
 
             connectButton.Font = new Font("Arial", 0.01f * Width);
             ipTextBox.Font = new Font("Arial", 0.01f * Width);
             createServerButton.Font = new Font("Arial", 0.01f * Width);
+            cancelButton.Font = new Font("Arial", 0.01f * Width);
 
             infoLabel.SetBounds((int)(0.05 * Width), (int)(0.02 * Height), (int)(0.3 * Width), (int)(0.05 * Height));
             infoLabel.Font = new Font("Arial", 0.01f * Width);
@@ -272,7 +278,14 @@ namespace Ballon_Battle
 
         private void createServerButton_Click(object sender, EventArgs e)
         {
+            if(_networkHandler != null)
+            {
+                MessageBox.Show("Сначала отмените предыдщее действие.");
+                return;
+            }
+            cancelButton.Visible = true;
             Server server = new Server();
+            _networkHandler = server;
             infoLabel.Text = string.Format("Сервер запущен на IP-адресе: {0}", IpAddressGetter.GetLocalIPAddress());
             int seed = new Random().Next();
             server.OnGetData += (_) => StartGame(seed, server, true);
@@ -288,18 +301,33 @@ namespace Ballon_Battle
             prizeTimer.Start();
             windTimer.Start();
             _networkControlsContainer.UpdateVisibility(false);
+            cancelButton.Visible = false;
         }
 
         private void connectButton_Click(object sender, EventArgs e)
         {
+            if (_networkHandler != null)
+            {
+                MessageBox.Show("Сначала отмените предыдщее действие.");
+                return;
+            }
+            cancelButton.Visible = true;
             var ipText = ipTextBox.Text;
             Client client = new Client(ipText);
+            _networkHandler = client;
             infoLabel.Text = string.Format("Попытка подключения к серверу {0}", ipText);
             client.OnGetData += (obj) =>
             {
                 StartGame((int)obj, client, false);
             };
             client.GetData<int>();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            _networkHandler?.Dispose();
+            _networkHandler = null;
+            infoLabel.Text = string.Format("Предыдущее действие отменено.");
         }
     }
 }

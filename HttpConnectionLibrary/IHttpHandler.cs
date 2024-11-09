@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace HttpConnectionLibrary
 {
-    public interface IHttpHandler
+    public interface IHttpHandler : IDisposable
     {
         Task UpdateData<T>(T obj);
         event Action<object> OnGetData;
