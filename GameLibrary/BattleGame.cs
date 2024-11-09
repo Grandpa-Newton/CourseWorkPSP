@@ -320,6 +320,8 @@ namespace GameLibrary
 
             _currentNetworkData.BulletData = _bulletData;
 
+            _currentNetworkData.Fuel = _currentPlayer.Fuel;
+
             await _networkHandler.UpdateData(_currentNetworkData);
 
             _bulletData = null;
@@ -718,12 +720,8 @@ namespace GameLibrary
                     keysDown[7] = false;
                     break;
 
-                case Keys.M:
-                    secondPlayer.ChangeAmmo();
-                    break;
-
                 case Keys.X:
-                    firstPlayer.ChangeAmmo();
+                    _currentPlayer.ChangeAmmo();
                     break;
 
             }
@@ -761,6 +759,8 @@ namespace GameLibrary
             NetworkData networkData = (NetworkData)obj;
 
             _networkPlayer.PositionCenter = new Vector2(networkData.BalloonPositionX, networkData.BalloonPositionY);
+
+            _networkPlayer.Fuel = networkData.Fuel;
 
             var bulletData = networkData.BulletData;
 

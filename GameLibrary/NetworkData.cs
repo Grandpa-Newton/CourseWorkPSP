@@ -7,5 +7,6 @@ namespace GameLibrary
         public float BalloonPositionX;
         public float BalloonPositionY;
         public BulletData BulletData;
+        public int Fuel;
     }
 }
