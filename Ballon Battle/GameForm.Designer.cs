@@ -40,6 +40,7 @@ namespace Ballon_Battle
             this.ipTextBox = new System.Windows.Forms.TextBox();
             this.connectButton = new System.Windows.Forms.Button();
             this.createServerButton = new System.Windows.Forms.Button();
+            this.infoLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // glControl
@@ -95,6 +96,8 @@ namespace Ballon_Battle
             this.ipTextBox.Name = "ipTextBox";
             this.ipTextBox.Size = new System.Drawing.Size(157, 37);
             this.ipTextBox.TabIndex = 4;
+            this.ipTextBox.Text = "26.41.29.58";
+            this.ipTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // connectButton
             // 
@@ -118,11 +121,22 @@ namespace Ballon_Battle
             this.createServerButton.UseVisualStyleBackColor = true;
             this.createServerButton.Click += new System.EventHandler(this.createServerButton_Click);
             // 
+            // infoLabel
+            // 
+            this.infoLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(142)))), ((int)(((byte)(196)))));
+            this.infoLabel.AutoSize = true;
+            this.infoLabel.Location = new System.Drawing.Point(25, 23);
+            this.infoLabel.Name = "infoLabel";
+            this.infoLabel.Size = new System.Drawing.Size(0, 13);
+            this.infoLabel.TabIndex = 7;
+            this.infoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.glControl);
             this.Controls.Add(this.firstPlayerInfo);
             this.Controls.Add(this.secondPlayerInfo);
@@ -161,5 +175,6 @@ namespace Ballon_Battle
         private System.Windows.Forms.TextBox ipTextBox;
         private System.Windows.Forms.Button createServerButton;
         private System.Windows.Forms.Button connectButton;
+        private System.Windows.Forms.Label infoLabel;
     }
 }

@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="IHttpHandler.cs" />
-    <Compile Include="NetworkManager.cs" />
+    <Compile Include="IpAddressGetter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
   </ItemGroup>

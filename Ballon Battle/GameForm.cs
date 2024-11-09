@@ -5,6 +5,8 @@ using OpenTK.Graphics.OpenGL;
 using GameLibrary;
 using HttpConnectionLibrary;
 using System.Threading.Tasks;
+using System.Net.Sockets;
+using System.Net;
 
 namespace Ballon_Battle
 {
@@ -14,6 +16,7 @@ namespace Ballon_Battle
         /// Объект игрового движка
         /// </summary>
         BattleGame gameEngine;
+        private NetworkControlsContainer _networkControlsContainer;
 
         /// <summary>
         /// Label для отображения текущего состояния первого игрока
@@ -30,11 +33,18 @@ namespace Ballon_Battle
         /// </summary>
         public GameForm()
         {
-
             InitializeComponent();
             CenterToScreen();
             glControl.Size = this.Size;
             gameEngine = new BattleGame();
+            _networkControlsContainer = new NetworkControlsContainer(new Control[]
+            {
+                ipTextBox,
+                connectButton,
+                createServerButton,
+                infoLabel
+            });
+            _networkControlsContainer.UpdateVisibility(true);
         }
 
         /// <summary>
@@ -81,6 +91,20 @@ namespace Ballon_Battle
             secondPlayerInfo.SetBounds((int)(0.55 * Width), (int)(0.01 * Height), (int)(0.45 * Width), (int)(0.03 * Height)); // информация первого игрока (здоровье, топливо, броня)
             secondPlayerInfo.Font = new Font("Arial", 0.008f * Width);
             secondPlayerInfo.Text = gameEngine.GetSecondPlayerInfo();
+        }
+
+        private void UpdateNetworkUIScale()
+        {
+            connectButton.SetBounds((int)(0.05 * Width), (int)(0.85 * Height), (int)(0.25 * Width), (int)(0.05 * Height));
+            ipTextBox.SetBounds((int)(0.375 * Width), (int)(0.85 * Height), (int)(0.25 * Width), (int)(0.05 * Height));
+            createServerButton.SetBounds((int)(0.7 * Width), (int)(0.85 * Height), (int)(0.25 * Width), (int)(0.05 * Height));
+
+            connectButton.Font = new Font("Arial", 0.01f * Width);
+            ipTextBox.Font = new Font("Arial", 0.01f * Width);
+            createServerButton.Font = new Font("Arial", 0.01f * Width);
+
+            infoLabel.SetBounds((int)(0.05 * Width), (int)(0.02 * Height), (int)(0.3 * Width), (int)(0.05 * Height));
+            infoLabel.Font = new Font("Arial", 0.01f * Width);
         }
 
         /// <summary>
@@ -224,6 +248,8 @@ namespace Ballon_Battle
         {
             glControl.Size = this.Size;
             GL.Viewport(0, 0, Width, Height);
+
+            UpdateNetworkUIScale();
         }
 
         /// <summary>
@@ -249,6 +275,7 @@ namespace Ballon_Battle
         private void createServerButton_Click(object sender, EventArgs e)
         {
             Server server = new Server();
+            infoLabel.Text = string.Format("Сервер запущен на IP-адресе: {0}", IpAddressGetter.GetLocalIPAddress());
             int seed = new Random().Next();
             server.OnGetData += (_) => StartGame(seed, server, true);
             server.UpdateData(seed);
@@ -262,11 +289,14 @@ namespace Ballon_Battle
             glTimer.Start();
             prizeTimer.Start();
             windTimer.Start();
+            _networkControlsContainer.UpdateVisibility(false);
         }
 
         private void connectButton_Click(object sender, EventArgs e)
         {
-            Client client = new Client(ipTextBox.Text);
+            var ipText = ipTextBox.Text;
+            Client client = new Client(ipText);
+            infoLabel.Text = string.Format("Попытка подключения к серверу {0}", ipText);
             client.OnGetData += (obj) =>
             {
                 StartGame((int)obj, client, false);
