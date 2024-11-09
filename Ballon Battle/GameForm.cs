@@ -153,7 +153,7 @@ namespace Ballon_Battle
             glControl.Refresh();
             if (gameEngine.GetExplodesCount() <= 0)
             {
-                endGame("ИГРА ОКОНЧЕНА! ПЕРВОЙ ИГРОК ПРОИГРАЛ. Хотите начать заново?");
+                endGame("ИГРА ОКОНЧЕНА! КРАСНЫЙ ШАР ПРОИГРАЛ. Хотите начать заново?");
             }
         }
         
@@ -167,7 +167,7 @@ namespace Ballon_Battle
             glControl.Refresh();
             if (gameEngine.GetExplodesCount() <= 0)
             {
-                endGame("ИГРА ОКОНЧЕНА! ВТОРОЙ ИГРОК ПРОИГРАЛ. Хотите начать заново?");
+                endGame("ИГРА ОКОНЧЕНА! СИНИЙ ШАР ПРОИГРАЛ. Хотите начать заново?");
             }
         }
 
