@@ -8,5 +8,6 @@ namespace GameLibrary
         public float BalloonPositionY;
         public BulletData BulletData;
         public int Fuel;
+        public bool WasAmmoChanged;
     }
 }

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3BC79686-A271-4D81-9D92-7A95A36E319E}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>Ballon_Battle</RootNamespace>
     <AssemblyName>Ballon Battle</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>

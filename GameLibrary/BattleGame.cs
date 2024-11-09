@@ -135,6 +135,7 @@ namespace GameLibrary
         private Balloon _networkPlayer;
         private NetworkData _currentNetworkData = new NetworkData();
         private BulletData _bulletData;
+        private bool _wasAmmoChanged;
 
         public void SetNetworkStartData(IHttpHandler networkHandler, bool isLeftPlayer, int seed)
         {
@@ -307,9 +308,12 @@ namespace GameLibrary
 
             _currentNetworkData.Fuel = _currentPlayer.Fuel;
 
+            _currentNetworkData.WasAmmoChanged = _wasAmmoChanged;
+
             await _networkHandler.UpdateData(_currentNetworkData);
 
             _bulletData = null;
+            _wasAmmoChanged = false;
         }
 
         /// <summary>
@@ -652,6 +656,7 @@ namespace GameLibrary
 
                 case Keys.X:
                     _currentPlayer.ChangeAmmo();
+                    _wasAmmoChanged = true;
                     break;
 
             }
@@ -691,6 +696,11 @@ namespace GameLibrary
             _networkPlayer.PositionCenter = new Vector2(networkData.BalloonPositionX, networkData.BalloonPositionY);
 
             _networkPlayer.Fuel = networkData.Fuel;
+
+            if (networkData.WasAmmoChanged)
+            {
+                _networkPlayer.ChangeAmmo();
+            }
 
             var bulletData = networkData.BulletData;
 
