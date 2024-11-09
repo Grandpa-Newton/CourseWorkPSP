@@ -16,14 +16,12 @@ namespace HttpConnectionLibrary
         public Client(string ipAddress)
         {
             _httpClient = new HttpClient(new HttpClientHandler());
-            _address = $"http://{ipAddress}:8000/";
+            _address = $"http://{ipAddress}:8080/";
         }
         
         public async Task GetData<T>()
         {
-            Console.WriteLine("Start getting data");
             var response = await _httpClient.GetAsync(_address);
-            Console.WriteLine("Start reading data");
             var resultText = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<T>(resultText);
             OnGetData?.Invoke(result);

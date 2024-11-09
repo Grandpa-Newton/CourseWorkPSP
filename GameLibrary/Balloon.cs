@@ -317,7 +317,8 @@ namespace GameLibrary
         /// <returns>Информация об игроке</returns>
         public string GetInfo()
         {
-            return $"Health = {Health}, Armour = {Armour}, Fuel = {Fuel}, Radius = {100*ammos[currentAmmo].Radius}, Distance = {100*ammos[currentAmmo].Distance}, Speed = {100*ammos[currentAmmo].Speed.X}";
+            return $"Health = {Health}, Armour = {Armour}, Fuel = {Fuel}, Radius = {100*ammos[currentAmmo].Radius}, " +
+                $"Distance = {100*ammos[currentAmmo].Distance}, Speed = {100*ammos[currentAmmo].Speed.X}";
         }
 
         public void SetRandom(Random random)

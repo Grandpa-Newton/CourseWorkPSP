@@ -124,16 +124,6 @@ namespace GameLibrary
         /// </summary>
         List<bool> keysDown;
 
-        /// <summary>
-        /// Количество тиков выстрелов второго игрока, отвечает за выпуск снарядов не ранее 50 тиков
-        /// </summary>
-        int secondPlayerTicks = 50;
-
-        /// <summary>
-        /// Количество тиков выстрелов первого игрока, отвечает за выпуск снарядов не ранее 50 тиков
-        /// </summary>
-        int firstPlayerTicks = 50;
-
         int currentPlayerTicks = 50;
         
         /// <summary>
@@ -285,12 +275,7 @@ namespace GameLibrary
         /// </returns>
         public async Task<int> Update()
         {
-            firstPlayerTicks++;
-            secondPlayerTicks++;
             currentPlayerTicks++;
-
-            /*firstPlayer.Update();
-            secondPlayer.Update();*/
 
             _currentPlayer.Update();
 
@@ -332,16 +317,6 @@ namespace GameLibrary
         /// </summary>
         private void UpdateInput()
         {
-            /*if (keysDown[0] && (firstPlayerCollider.Y > screenCollider.Y))
-                firstPlayer.Update(new Vector2(0f, 0.01f));
-            if (keysDown[1])
-                firstPlayer.Update(new Vector2(0f, -0.01f));
-            if (keysDown[2] && (secondPlayerCollider.Y > screenCollider.Y))
-                secondPlayer.Update(new Vector2(0f, 0.01f));
-            if (keysDown[3])
-                secondPlayer.Update(new Vector2(0f, -0.01f));*/
-
-
             if (keysDown[0] && currentPlayerCollider.Y > screenCollider.Y)
             {
                 _currentPlayer.Update(new Vector2(0f, 0.01f));
@@ -350,26 +325,13 @@ namespace GameLibrary
             {
                 _currentPlayer.Update(new Vector2(0f, -0.01f));
             }
-
-            /*if ((keysDown[4] || keysDown[7]) && secondPlayerTicks >= 50)
-            {
-                secondPlayerTicks = 0;
-                Ammo newAmmo = null;
-                if (keysDown[4])
-                    newAmmo = secondPlayer.GetCurrentAmmo(true);
-                else if (keysDown[7])
-                    newAmmo = secondPlayer.GetCurrentAmmo(false);
-                //   Debug.WriteLine($"Distance={newAmmo.Distance}, Radius={newAmmo.Radius}, Speed={newAmmo.Speed.X}");
-                secondAmmos.Add(newAmmo);
-
-            }*/
-            if ((keysDown[5] || keysDown[6]) && currentPlayerTicks >= 50)
+            if ((keysDown[2] || keysDown[3]) && currentPlayerTicks >= 50)
             {
                 currentPlayerTicks = 0;
                 Ammo newAmmo = null;
-                if (keysDown[5])
+                if (keysDown[2])
                     newAmmo = _currentPlayer.GetCurrentAmmo(false);
-                else if (keysDown[6])
+                else if (keysDown[3])
                     newAmmo = _currentPlayer.GetCurrentAmmo(true);
 
                 //   Debug.WriteLine($"Distance={newAmmo.Distance}, Radius={newAmmo.Radius}, Speed={newAmmo.Speed.X}");
@@ -654,28 +616,12 @@ namespace GameLibrary
                     keysDown[1] = true;
                     break;
 
-                case Keys.I:
+                case Keys.D:
                     keysDown[2] = true;
                     break;
 
-                case Keys.K:
-                    keysDown[3] = true;
-                    break;
-
-                case Keys.J:
-                    keysDown[4] = true;
-                    break;
-
-                case Keys.D:
-                    keysDown[5] = true;
-                    break;
-
                 case Keys.A:
-                    keysDown[6] = true;
-                    break;
-
-                case Keys.L:
-                    keysDown[7] = true;
+                    keysDown[3] = true;
                     break;
             }
         }
@@ -696,28 +642,12 @@ namespace GameLibrary
                     keysDown[1] = false;
                     break;
 
-                case Keys.I:
+                case Keys.D:
                     keysDown[2] = false;
                     break;
 
-                case Keys.K:
-                    keysDown[3] = false;
-                    break;
-
-                case Keys.J:
-                    keysDown[4] = false;
-                    break;
-
-                case Keys.D:
-                    keysDown[5] = false;
-                    break;
-
                 case Keys.A:
-                    keysDown[6] = false;
-                    break;
-
-                case Keys.L:
-                    keysDown[7] = false;
+                    keysDown[3] = false;
                     break;
 
                 case Keys.X:

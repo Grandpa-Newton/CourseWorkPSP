@@ -5,8 +5,6 @@ using OpenTK.Graphics.OpenGL;
 using GameLibrary;
 using HttpConnectionLibrary;
 using System.Threading.Tasks;
-using System.Net.Sockets;
-using System.Net;
 
 namespace Ballon_Battle
 {
