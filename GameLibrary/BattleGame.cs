@@ -136,6 +136,8 @@ namespace GameLibrary
         private NetworkData _currentNetworkData = new NetworkData();
         private BulletData _bulletData;
         private bool _wasAmmoChanged;
+        private int _networkCodeResult;
+        private int _codeResult;
 
         public void SetNetworkStartData(IHttpHandler networkHandler, bool isLeftPlayer, int seed)
         {
@@ -276,6 +278,11 @@ namespace GameLibrary
         /// </returns>
         public async Task<int> Update()
         {
+            if(_networkCodeResult != 0)
+            {
+                return _networkCodeResult;
+            }
+
             currentPlayerTicks++;
 
             _currentPlayer.Update();
@@ -286,10 +293,11 @@ namespace GameLibrary
             currentPlayerCollider = _currentPlayer.GetCollider();
 
             UpdateInput();
-            int codeResult = CheckCollisions();
-            if (codeResult != 0)
+            _codeResult = CheckCollisions();
+            if (_codeResult != 0)
             {
-                return codeResult;
+                await UpdateNetworkData();
+                return _codeResult;
             }
             UpdateAmmos();
             UpdatePrize();
@@ -309,6 +317,8 @@ namespace GameLibrary
             _currentNetworkData.Fuel = _currentPlayer.Fuel;
 
             _currentNetworkData.WasAmmoChanged = _wasAmmoChanged;
+
+            _currentNetworkData.ResultCode = _codeResult;
 
             await _networkHandler.UpdateData(_currentNetworkData);
 
@@ -692,6 +702,13 @@ namespace GameLibrary
         private void OnGetNetworkData(object obj)
         {
             NetworkData networkData = (NetworkData)obj;
+
+            _networkCodeResult = networkData.ResultCode;
+
+            if (networkData.ResultCode != 0)
+            {
+                return;
+            }
 
             _networkPlayer.PositionCenter = new Vector2(networkData.BalloonPositionX, networkData.BalloonPositionY);
 

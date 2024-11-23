@@ -9,5 +9,6 @@ namespace GameLibrary
         public BulletData BulletData;
         public int Fuel;
         public bool WasAmmoChanged;
+        public int ResultCode;
     }
 }
