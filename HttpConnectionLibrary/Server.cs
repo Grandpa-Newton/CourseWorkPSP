@@ -31,11 +31,10 @@ namespace HttpConnectionLibrary
             var context = await _listener.GetContextAsync();
             await Console.Out.WriteLineAsync("Start getting request");
             var request = GetRequest<T>(context);
+            OnGetData?.Invoke(request);
 
             await Console.Out.WriteLineAsync("Start sending response");
             SendResponse(context, obj);
-
-            OnGetData?.Invoke(request);
         }
 
         public void ClearAllListeners()

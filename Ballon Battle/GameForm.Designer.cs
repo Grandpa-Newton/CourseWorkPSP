@@ -59,7 +59,7 @@ namespace Ballon_Battle
             // 
             // glTimer
             // 
-            this.glTimer.Interval = 10;
+            this.glTimer.Interval = 5;
             this.glTimer.Tick += new System.EventHandler(this.glTimer_Tick);
             // 
             // prizeTimer

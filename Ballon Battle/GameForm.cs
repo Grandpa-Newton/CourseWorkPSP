@@ -28,6 +28,7 @@ namespace Ballon_Battle
         /// Label для отображения текущего состояния второго игрока
         /// </summary>
         Label secondPlayerInfo; // label для отображения текущего состояния второго игрока
+        private bool _updateResult;
 
         /// <summary>
         /// Конструктор формы
@@ -117,8 +118,10 @@ namespace Ballon_Battle
         /// <param name="message">Сообщение, выводимое при завершении игры</param>
         private void endGame(string message)
         {
+            _networkHandler?.ClearAllListeners();
             glTimer.Stop();
             DialogResult result = MessageBox.Show(message, "Конец игры", MessageBoxButtons.YesNo);
+            _networkHandler?.Dispose(); 
             if (result == DialogResult.Yes)
             {
                 Application.Restart();
@@ -188,12 +191,18 @@ namespace Ballon_Battle
         /// <param name="e"></param>
         private async void glTimer_Tick(object sender, EventArgs e)
         {
+            if (!_updateResult)
+            {
+                return;
+            }
             await GetResult();
         }
 
         private async Task GetResult()
         {
+            _updateResult = false;
             int resultCode = await gameEngine.Update();
+            _updateResult = true;
 
             switch (resultCode)
             {
@@ -297,6 +306,7 @@ namespace Ballon_Battle
             handler.ClearAllListeners();
             gameEngine.SetNetworkStartData(handler, isServer, seed);
             glControl.Visible = true;
+            _updateResult = true;
             glTimer.Start();
             prizeTimer.Start();
             windTimer.Start();

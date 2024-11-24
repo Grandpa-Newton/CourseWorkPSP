@@ -15,7 +15,7 @@ namespace HttpConnectionLibrary
 
         public Client(string ipAddress)
         {
-            _httpClient = new HttpClient(new HttpClientHandler());
+            _httpClient = new HttpClient();
             _address = $"http://{ipAddress}:8080/";
         }
         
