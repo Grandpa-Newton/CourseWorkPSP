@@ -7,11 +7,24 @@ using System.Threading.Tasks;
 
 namespace HttpConnectionLibrary
 {
+    /// <summary>
+    /// Http-сервер для передачи данных
+    /// </summary>
     public class Server : IHttpHandler
     {
+        /// <summary>
+        /// Событие, вызываемое после получения данных
+        /// </summary>
         public event Action<object> OnGetData;
 
+        /// <summary>
+        /// Объект для http-сервера
+        /// </summary>
         private HttpListener _listener;
+
+        /// <summary>
+        /// Создание Http-сервера
+        /// </summary>
         public Server()
         {
             _listener = new HttpListener();
@@ -19,12 +32,21 @@ namespace HttpConnectionLibrary
             _listener.Start();
         }
 
+        /// <summary>
+        /// Освобождение ресурсов
+        /// </summary>
         public void Dispose()
         {
             _listener.Stop();
             _listener.Close();
         }
 
+        /// <summary>
+        /// Получение и отправка данных
+        /// </summary>
+        /// <typeparam name="T">Тип данных, передаваемых по сети</typeparam>
+        /// <param name="obj">Данные, передаваемые по сети</param>
+        /// <returns></returns>
         public async Task UpdateData<T>(T obj)
         {
             await Console.Out.WriteLineAsync("Start updating data");
@@ -37,11 +59,20 @@ namespace HttpConnectionLibrary
             SendResponse(context, obj);
         }
 
+        /// <summary>
+        /// Очистка всех подписок на событие OnGetData
+        /// </summary>
         public void ClearAllListeners()
         {
             OnGetData = null;
         }
 
+        /// <summary>
+        /// Получение запроса от клиента
+        /// </summary>
+        /// <typeparam name="T">Тип данных, передаваемых по сети</typeparam>
+        /// <param name="context">Контекст подключения</param>
+        /// <returns>Данные, полученные от клиента</returns>
         private T GetRequest<T>(HttpListenerContext context)
         {
             var request = context.Request;
@@ -74,6 +105,12 @@ namespace HttpConnectionLibrary
             }
         }
 
+        /// <summary>
+        /// Отправка ответа на клиент
+        /// </summary>
+        /// <typeparam name="T">Тип данных, передаваемых по сети</typeparam>
+        /// <param name="context">Контекст подключения</param>
+        /// <param name="obj">Данные, передаваемые по сети</param>
         private void SendResponse<T>(HttpListenerContext context, T obj)
         {
             var response = context.Response;

@@ -1,7 +1,15 @@
 ﻿namespace AmmoLibrary
 {
+    /// <summary>
+    /// Класс расширений для класса Ammo
+    /// </summary>
     public static class AmmoExtensions
     {
+        /// <summary>
+        /// Сериализация типа снаряда
+        /// </summary>
+        /// <param name="ammo">Объект снаряда</param>
+        /// <returns>Код типа снаряда</returns>
         public static int SerializeAmmo(this Ammo ammo)
         {
             if (ammo is ExplosiveAmmo)

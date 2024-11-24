@@ -15,8 +15,14 @@ namespace Ballon_Battle
         /// </summary>
         BattleGame gameEngine;
 
+        /// <summary>
+        /// Контейнер с элементами UI для подключения
+        /// </summary>
         private NetworkControlsContainer _networkControlsContainer;
 
+        /// <summary>
+        /// Объект для сетевого взаимодействия
+        /// </summary>
         private IHttpHandler _networkHandler;
 
         /// <summary>
@@ -96,6 +102,9 @@ namespace Ballon_Battle
             secondPlayerInfo.Text = gameEngine.GetSecondPlayerInfo();
         }
 
+        /// <summary>
+        /// Обновление размера элементов UI для соединения
+        /// </summary>
         private void UpdateNetworkUIScale()
         {
             connectButton.SetBounds((int)(0.05 * Width), (int)(0.85 * Height), (int)(0.25 * Width), (int)(0.05 * Height));
@@ -198,6 +207,10 @@ namespace Ballon_Battle
             await GetResult();
         }
 
+        /// <summary>
+        /// Обновление игрового процесса и получение кода результата выполнения
+        /// </summary>
+        /// <returns></returns>
         private async Task GetResult()
         {
             _updateResult = false;
@@ -285,6 +298,11 @@ namespace Ballon_Battle
             gameEngine.UpdateKeyDown(e);
         }
 
+        /// <summary>
+        /// Обработчик события нажатия на кнопку создания сервера
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void createServerButton_Click(object sender, EventArgs e)
         {
             if(_networkHandler != null)
@@ -301,6 +319,12 @@ namespace Ballon_Battle
             server.UpdateData(seed);
         }
 
+        /// <summary>
+        /// Запуск игры
+        /// </summary>
+        /// <param name="seed">Сид для случайной генерации</param>
+        /// <param name="handler">Объект для сетевого взаимодействия</param>
+        /// <param name="isServer">Отметка, является ли узел сервером</param>
         private void StartGame(int seed, IHttpHandler handler, bool isServer)
         {
             handler.ClearAllListeners();
@@ -314,6 +338,11 @@ namespace Ballon_Battle
             cancelButton.Visible = false;
         }
 
+        /// <summary>
+        /// Обработчик нажатия на кнопку подсоединения к серверу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void connectButton_Click(object sender, EventArgs e)
         {
             if (_networkHandler != null)
@@ -333,6 +362,11 @@ namespace Ballon_Battle
             client.GetData<int>();
         }
 
+        /// <summary>
+        /// Обработчик нажатия на кнопку отмены последнего действия по соединению
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             _networkHandler?.Dispose();

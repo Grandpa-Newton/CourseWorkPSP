@@ -62,6 +62,9 @@ namespace GameLibrary
         /// </summary>
         RectangleF secondPlayerCollider;
 
+        /// <summary>
+        /// Границы объекта текущего игрока
+        /// </summary>
         private RectangleF currentPlayerCollider;
 
         /// <summary>
@@ -124,21 +127,62 @@ namespace GameLibrary
         /// </summary>
         List<bool> keysDown;
 
+        /// <summary>
+        /// Количество тиков текущего игрока
+        /// </summary>
         int currentPlayerTicks = 50;
         
         /// <summary>
         /// Объект генератора призов
         /// </summary>
         PrizeGenerator prizeGenerator;
+
+        /// <summary>
+        /// Объект для передачи данных по сети
+        /// </summary>
         private IHttpHandler _networkHandler;
+
+        /// <summary>
+        /// Объект текущего игрока
+        /// </summary>
         private Balloon _currentPlayer;
+
+        /// <summary>
+        /// Объект сетевого игрока
+        /// </summary>
         private Balloon _networkPlayer;
+
+        /// <summary>
+        /// Информация текущего игрока, передаваемая по сети
+        /// </summary>
         private NetworkData _currentNetworkData = new NetworkData();
+
+        /// <summary>
+        /// Информация о выпускаемом снаряде текущего игрока
+        /// </summary>
         private BulletData _bulletData;
+
+        /// <summary>
+        /// Показатель, был ли изменён тип выпускаемого снаряда
+        /// </summary>
         private bool _wasAmmoChanged;
+
+        /// <summary>
+        /// Код результата от игрока, подключённого по сети
+        /// </summary>
         private int _networkCodeResult;
+
+        /// <summary>
+        /// Код результата выполнения игрового цикла
+        /// </summary>
         private int _codeResult;
 
+        /// <summary>
+        /// Установка данных для сетевого взаимодействия
+        /// </summary>
+        /// <param name="networkHandler">Объект сетевого взаимодействия</param>
+        /// <param name="isLeftPlayer">Показатель, является ли игрок сервером</param>
+        /// <param name="seed">Сид для случайной генерации</param>
         public void SetNetworkStartData(IHttpHandler networkHandler, bool isLeftPlayer, int seed)
         {
             _networkHandler = networkHandler;
@@ -306,6 +350,10 @@ namespace GameLibrary
             return 0;
         }
 
+        /// <summary>
+        /// Обновление значений сетевых данных для передачи
+        /// </summary>
+        /// <returns></returns>
         private async Task UpdateNetworkData()
         {
             var positionCenter = _currentPlayer.PositionCenter;
@@ -699,6 +747,10 @@ namespace GameLibrary
             return explodes.Count;
         }
 
+        /// <summary>
+        /// Обработчик события передачи данных
+        /// </summary>
+        /// <param name="obj">Объект с сетевыми данными</param>
         private void OnGetNetworkData(object obj)
         {
             NetworkData networkData = (NetworkData)obj;
@@ -736,6 +788,11 @@ namespace GameLibrary
             }
         }
 
+        /// <summary>
+        /// Создание нового снаряда
+        /// </summary>
+        /// <param name="bulletData">Информация о выпускаемом снаряде</param>
+        /// <returns>Создаваемый снаряд</returns>
         private Ammo CreateNewAmmo(BulletData bulletData)
         {
             Ammo ammo = null;
