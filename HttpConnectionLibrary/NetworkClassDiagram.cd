@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="HttpConnectionLibrary.Client" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7.5" Y="1.75" Width="1.5" />
+    <Position X="7.5" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAACABAECAAAAAAABAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Client.cs</FileName>
@@ -9,14 +9,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="HttpConnectionLibrary.IpAddressGetter" Collapsed="true">
-    <Position X="9.25" Y="2.5" Width="1.5" />
+    <Position X="9.5" Y="2.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>IpAddressGetter.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="HttpConnectionLibrary.Server" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.25" Y="1.75" Width="1.5" />
+    <Position X="9.5" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAACBBAECACAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Server.cs</FileName>
@@ -24,11 +24,11 @@
     <Lollipop Position="0.242" />
   </Class>
   <Interface Name="HttpConnectionLibrary.IHttpHandler" Collapsed="true">
-    <Position X="7.5" Y="2.5" Width="1.5" />
+    <Position X="7.5" Y="2.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAACABAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IHttpHandler.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Font Name="Segoe UI" Size="9" />
+  <Font Name="Times New Roman" Size="14" />
 </ClassDiagram>
