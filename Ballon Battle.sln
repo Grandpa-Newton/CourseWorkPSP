@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpConnectionLibrary", "HttpConnectionLibrary\HttpConnectionLibrary.csproj", "{0D352643-8861-495A-92CC-0520EDF85FF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StressTests", "StressTests\StressTests.csproj", "{FBFBE370-A70E-43B2-90D7-A1C7D07D1C27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{0D352643-8861-495A-92CC-0520EDF85FF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D352643-8861-495A-92CC-0520EDF85FF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D352643-8861-495A-92CC-0520EDF85FF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBFBE370-A70E-43B2-90D7-A1C7D07D1C27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBFBE370-A70E-43B2-90D7-A1C7D07D1C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBFBE370-A70E-43B2-90D7-A1C7D07D1C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBFBE370-A70E-43B2-90D7-A1C7D07D1C27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
